@@ -81,7 +81,7 @@ Contributing & Creating a Feature Branch
 
 Instructions for creating a feature branch and contributing to the codebase.
 
-The following code below shows the commands to run when building a new feature, namely "water-on-mars". Make sure to use the namespace used below for consistency, i.e. using the **feature** tag before the actual name of the feature, separated by a ``/``.
+The following code below shows the commands to run when building a new feature, namely ``water-on-mars``. Make sure to use the namespace used below for consistency, i.e. using the ``feature`` tag before the actual name of the feature, separated by a ``/``.
 
 .. code-block:: guess
 
@@ -93,7 +93,7 @@ Make all your changes for the feature development on the newly created feature. 
 
     $ git push origin feature/water-on-mars
 
-Once done with the feature development, merge the latest copy of the **master** branch into your feature branch. The reason we do this is because any conflict resolution can be done on the feature branch as opposed to the master branch. On your **feature-branch**, run the following command:
+Once done with the feature development, merge the latest copy of the ``master`` branch into your feature branch. The reason we do this is because any conflict resolution can be done on the feature branch as opposed to the master branch. On your ``feature/water-on-mars``, run the following command:
 
 .. code-block:: guess
 
