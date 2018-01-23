@@ -41,6 +41,7 @@ Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
+
   $ py.test
 
 Live reloading and Sass CSS compilation
@@ -63,6 +64,7 @@ Local Development
 ^^^^^^^^^^^^^^^^^
 
 To deploy locally for development on your machine::
+
     $ git clone https://gitlab.com/koinrex/koinrex.git
     $ cd koinrex
     $ mkvirtualenv koinrex
