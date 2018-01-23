@@ -23,8 +23,9 @@ Setting Up Your Users
 
 * To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
 
-* To create an **superuser account**, use this command::
+* To create an **superuser account**, use this command:
 
+::
     $ python manage.py createsuperuser
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
@@ -34,8 +35,7 @@ Test coverage
 
 To run the tests, check your test coverage, and generate an HTML coverage report:
 
-.. code-block:: sh
-
+::
     $ coverage run manage.py test
     $ coverage html
     $ open htmlcov/index.html
@@ -43,8 +43,7 @@ To run the tests, check your test coverage, and generate an HTML coverage report
 Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. highlight:: sh
-
+::
   $ py.test
 
 Live reloading and Sass CSS compilation
@@ -54,10 +53,6 @@ Moved to `Live reloading and SASS compilation`_.
 
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
-
-
-
-
 Deployment
 ----------
 
@@ -66,8 +61,9 @@ The following details how to deploy this application.
 Local Development
 ^^^^^^^^^^^^^^^^^
 
-To deploy locally for development on your machine::
+To deploy locally for development on your machine:
 
+::
     $ git clone https://gitlab.com/koinrex/koinrex.git
     $ cd koinrex
     $ mkvirtualenv koinrex
