@@ -33,7 +33,6 @@ Test coverage
 ^^^^^^^^^^^^^
 
 To run the tests, check your test coverage, and generate an HTML coverage report::
-
     $ coverage run manage.py test
     $ coverage html
     $ open htmlcov/index.html
@@ -42,7 +41,6 @@ Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
-
   $ py.test
 
 Live reloading and Sass CSS compilation
@@ -61,6 +59,14 @@ Deployment
 
 The following details how to deploy this application.
 
+Local Development
+^^^^^^^^^^^^^^^^^
 
-
-
+To deploy locally for development on your machine::
+    $ git clone https://gitlab.com/koinrex/koinrex.git
+    $ cd koinrex
+    $ mkvirtualenv koinrex
+    $ workon koinrex / source bin/activate
+    $ pip3 install -r requirements/local.txt
+    $ ./manage.py migrate
+    $ ./manage.py runserver
