@@ -81,11 +81,11 @@ Contributing & Creating a Feature Branch
 
 Instructions for creating a feature branch and contributing to the codebase.
 
-The following code below shows the commands to run when building a new feature, namely "water-on-mars".
+The following code below shows the commands to run when building a new feature, namely "water-on-mars". Make sure to use the namespace used below for consistency, i.e. using the **feature** tag before the actual name of the feature, separated by a ``/``.
 
 .. code-block:: guess
 
-    $ git checkout -b <feature/water-on-mars>
+    $ git checkout -b feature/water-on-mars
 
 Make all your changes for the feature development on the newly created feature. When pushing to Gitlab, use this:
 
