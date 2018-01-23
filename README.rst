@@ -26,7 +26,6 @@ Setting Up Your Users
 * To create an **superuser account**, use this command:
 
 .. code-block:: guess
-
     $ python manage.py createsuperuser
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
@@ -37,7 +36,6 @@ Test coverage
 To run the tests, check your test coverage, and generate an HTML coverage report:
 
 .. code-block:: guess
-
     $ coverage run manage.py test
     $ coverage html
     $ open htmlcov/index.html
@@ -46,8 +44,7 @@ Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: guess
-
-  $ py.test
+    $ py.test
 
 Live reloading and Sass CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -67,7 +64,6 @@ Local Development
 To deploy locally for development on your machine:
 
 .. code-block:: guess
-
     $ git clone https://gitlab.com/koinrex/koinrex.git
     $ cd koinrex
     $ mkvirtualenv koinrex
