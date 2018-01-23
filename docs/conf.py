@@ -17,7 +17,7 @@ import sys
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 
-# -- General configuration -----------------------------------------------------
+# -- General configuration -----------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
@@ -40,7 +40,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Koinrex'
-copyright = """2018, Rohit Gehe"""
+copyright = """2018, Koinrex Corp"""
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -86,7 +86,7 @@ pygments_style = 'sphinx'
 # modindex_common_prefix = []
 
 
-# -- Options for HTML output ---------------------------------------------------
+# -- Options for HTML output ---------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
@@ -166,7 +166,7 @@ html_static_path = ['_static']
 htmlhelp_basename = 'koinrexdoc'
 
 
-# -- Options for LaTeX output --------------------------------------------------
+# -- Options for LaTeX output --------------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
@@ -185,7 +185,7 @@ latex_documents = [
     ('index',
      'koinrex.tex',
      'Koinrex Documentation',
-     """Rohit Gehe""", 'manual'),
+     """Koinrex Corp""", 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -209,27 +209,27 @@ latex_documents = [
 # latex_domain_indices = True
 
 
-# -- Options for manual page output --------------------------------------------
+# -- Options for manual page output --------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'koinrex', 'Koinrex Documentation',
-     ["""Rohit Gehe"""], 1)
+     ["""Koinrex Corp"""], 1)
 ]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
 
 
-# -- Options for Texinfo output ------------------------------------------------
+# -- Options for Texinfo output ------------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'koinrex', 'Koinrex Documentation',
-     """Rohit Gehe""", 'Koinrex',
+     """Koinrex Corp""", 'Koinrex',
      """A kickass crypto to crypto exchange""", 'Miscellaneous'),
 ]
 
