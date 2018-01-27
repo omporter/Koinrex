@@ -27,6 +27,11 @@ if READ_DOT_ENV_FILE:
     env.read_env(env_file)
     print('The .env file has been loaded. See base.py for more information')
 
+#RECAPTCHA PUBLIC KEY/PRIVATE KEY/CAPTCHA-TYPE
+GOOGLE_RECAPTCHA_SITE_KEY = "6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u"
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdJ9kAUAAAAAPhvh0irz2YDBlqPvWl9R7yYg_bL'
+NOCAPTCHA = False	
+
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
@@ -37,7 +42,7 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'captcha',
     # Useful template tags:
     # 'django.contrib.humanize',
 

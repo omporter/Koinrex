@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% trans "Signup" %}  {% endblock %}
 
 {% block inner %}
 <h1>{% trans "Sign Up" %}</h1>
@@ -16,8 +16,25 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <script src='https://www.google.com/recaptcha/api.js'></script> 
+
+<div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio" data-theme="darklight"></div>
+  <br />
+  <button class="btn btn-primary" type="submit" id="recaptcha-submit" disabled>{% trans "Sign Up" %} &raquo;</button>
 </form>
 
+
+<script type="text/javascript">
+
+    var recaptchaCallback = function(resp) {    
+        document.getElementById("recaptcha-submit").disabled = false;
+    };
+    var recaptchaExpiredCallback = function(resp) { 
+        document.getElementById("recaptcha-submit").disabled = true; 
+    };
+</script>
+
 {% endblock %}
+
+
 
