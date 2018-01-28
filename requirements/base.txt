@@ -48,3 +48,6 @@ redis>=2.10.5
 
 
 # Your custom requirements go here
+
+# Sentry Logging
+raven==6.5.0
