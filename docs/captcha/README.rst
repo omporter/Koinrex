@@ -1,10 +1,9 @@
-
+=============================
 Koinrex signup with recaptcha
 =============================
 
-* To get your own keys for captcha for test on local server 
-
-.. _google recaptcha: https://www.google.com/recaptcha/intro/android.html
+* To get your own keys for test on local server get recaptchaV2_.
+   .. _recaptchaV2: https://www.google.com/recaptcha/intro/android.html
 
 * then click on get recaptcha
 
@@ -25,15 +24,19 @@ Updates
 * to change captcha type just replace the div with the new one
 
 
-.. code-block:: guess
+.. code:: html
+     
+      1) Image
 
-     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
+      <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
+      
+      2) Audio
 
-     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
+      <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
 
-* to change color 
+      3)To change captcha theme-color 
 
-     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
+      <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
 
 
 Things to note changes in the following 
@@ -42,13 +45,13 @@ Things to note changes in the following
 config/settings/base.py 
 -----------------------
 
-**GOOGLE_RECAPTCHA_SITE_KEY** = "xxx"
+**GOOGLE_RECAPTCHA_SITE_KEY** = "xxx" 
+
 **GOOGLE_RECAPTCHA_SECRET_KEY** = 'xxx'
 
-NOCAPTCHA = True or NOCAPTCHA = False
+**NOCAPTCHA** = True or **NOCAPTCHA** = False
 
-.. Not sure what True and False Does
-
+**Not sure what True and False Does**
 
 
 requirements/local.txt 
@@ -58,22 +61,20 @@ requirements/local.txt
 
 if that does not work then try 
 
-.. code-block:: guess
+.. code:: python
 
 	$ pip3 install django-nocaptcha-recaptcha
 	$ pip3 install django-recaptcha
 
 
-
 koinrex/templates/account/signup.html
 -------------------------------------
 
-.. code-block:: guess
+.. code:: html
 
-	$ <div class="g-recaptcha" data-sitekey="xxx" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
+	<div class="g-recaptcha" data-sitekey="xxx" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
 
-	and a JS code
-
+and a JS code
 
 
 
