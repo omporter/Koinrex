@@ -48,3 +48,7 @@ redis>=2.10.5
 
 
 # Your custom requirements go here
+
+# Bit library
+bit==0.4.2
+coincurve==6.0.0
