@@ -2,13 +2,13 @@
 Koinrex signup with recaptcha
 =============================
 
-- To get your own keys for captcha for test on local server 
+* To get your own keys for captcha for test on local server 
 
 .. _google recaptcha: https://www.google.com/recaptcha/intro/android.html
 
-- then click on get recaptcha
+* then click on get recaptcha
 
-- for lable type test1 or whatever you want then select recaptcha V2 and for domain type in 127.0.0.1
+* for lable type test1 or whatever you want then select recaptcha V2 and for domain type in 127.0.0.1
 
 Updates
 -------
@@ -26,13 +26,13 @@ to change captcha type just replace the div with the new one
 
 
 
-.. code:: <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
+.. code:: html <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
 
-..code:: <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
+.. code:: html <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
 
 - to change color 
 
-.. code:: <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
+.. code:: html <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
 
 
 Things to note changes in the following 
