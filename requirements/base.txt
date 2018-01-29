@@ -11,8 +11,6 @@ django==2.0.1 # pyup: <2.0
 # Configuration
 django-environ==0.4.4
 
-
-
 # Forms
 django-crispy-forms==1.7.0
 
@@ -43,12 +41,13 @@ pytz==2017.3
 django-redis==4.8.0
 redis>=2.10.5
 
-#recaptcha packages
- 
-django-nocaptcha-recaptcha
-django-recaptcha
 
 
 
 
 # Your custom requirements go here
+
+# Recaptcha packages
+
+django-nocaptcha-recaptcha
+django-recaptcha
