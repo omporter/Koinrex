@@ -41,10 +41,10 @@ Changelog notes
 
 
 Things to note
-==============
+--------------
 
 config/settings/base.py
------------------------
+=======================
 
 **GOOGLE_RECAPTCHA_SITE_KEY** = "xxx"
 
@@ -56,7 +56,7 @@ config/settings/base.py
 
 
 requirements/local.txt
-----------------------
+======================
 
 * 2 new packages for install, so please re-run `pip 3 install -r requirements/local.txt`
 
@@ -69,7 +69,7 @@ requirements/local.txt
 
 
 koinrex/templates/account/signup.html
--------------------------------------
+=====================================
 
 * Please make sure that the keys are correct in all the places including this HTML file
 
