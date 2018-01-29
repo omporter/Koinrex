@@ -5,47 +5,48 @@ Koinrex signup with recaptcha
 * To get your own keys for test on local server get recaptchaV2_.
    .. _recaptchaV2: https://www.google.com/recaptcha/intro/android.html
 
-* then click on get recaptcha
+* Then click on 'Get Recaptcha'
 
-* for lable type test1 or whatever you want then select recaptcha V2 and for domain type in 127.0.0.1
+* For `Lable type`, use any random keyword to identify the app
 
-Updates
--------
+* Then select V2 and for domain type in 127.0.0.1
 
-* I updated the koinrex login 
+Changelog notes
+---------------
 
-* Implementing recaptcha is easy but validating it was the hardest part.
-* It was hard to find a tutorial to validate it based on our template/layout of the website so the only possible way I could find was to add a JS code in the html page.
+* I updated the Koinrex login
 
-* So basically it diables the submit button until recaptcha is verified it is simple but not sure if it is ok to do this and it does not alter the other form functions example a field is left blank and so * on.
+* Implementing recaptcha is easy but validating it was the hardest part
 
-* I just uploaded on my github before merging with master on gitlab.
+* It was hard to find a tutorial to validate it based on our template/layout of the website so the only possible way I could find was to add a JS code in the html page (TODO)
 
-* to change captcha type just replace the div with the new one
+   * So basically it disables the submit button until recaptcha is verified it is simple but not sure if it is ok to do this and it does not alter the other form functions example a field is left blank and so on.
+
+* To change captcha type just replace the div with the new one
 
 
 .. code:: html
-     
+
       1) Image
 
       <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
-      
+
       2) Audio
 
       <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
 
-      3)To change captcha theme-color 
+      3)To change captcha theme-color
 
       <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
 
 
-Things to note changes in the following 
-=======================================
+Things to note
+==============
 
-config/settings/base.py 
+config/settings/base.py
 -----------------------
 
-**GOOGLE_RECAPTCHA_SITE_KEY** = "xxx" 
+**GOOGLE_RECAPTCHA_SITE_KEY** = "xxx"
 
 **GOOGLE_RECAPTCHA_SECRET_KEY** = 'xxx'
 
@@ -54,12 +55,12 @@ config/settings/base.py
 **Not sure what True and False Does**
 
 
-requirements/local.txt 
+requirements/local.txt
 ----------------------
 
-2 new packages for install 
+* 2 new packages for install, so please re-run `pip 3 install -r requirements/local.txt`
 
-if that does not work then try 
+* If that does not work then try
 
 .. code:: python
 
@@ -70,11 +71,13 @@ if that does not work then try
 koinrex/templates/account/signup.html
 -------------------------------------
 
+* Please make sure that the keys are correct in all the places including this HTML file
+
 .. code:: html
 
 	<div class="g-recaptcha" data-sitekey="xxx" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
 
-and a JS code
+
 
 
 
