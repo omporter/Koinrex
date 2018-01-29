@@ -27,13 +27,13 @@ Updates
 
 .. code-block:: guess
 
-..     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
+     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image"></div>
 
-..     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
+     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="audio"></div>
 
-- to change color 
+* to change color 
 
-..     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
+     $ <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
 
 
 Things to note changes in the following 
@@ -42,8 +42,8 @@ Things to note changes in the following
 config/settings/base.py 
 -----------------------
 
-GOOGLE_RECAPTCHA_SITE_KEY = "xxx"
-GOOGLE_RECAPTCHA_SECRET_KEY = 'xxx'
+**GOOGLE_RECAPTCHA_SITE_KEY** = "xxx"
+**GOOGLE_RECAPTCHA_SECRET_KEY** = 'xxx'
 
 NOCAPTCHA = True or NOCAPTCHA = False
 
@@ -60,8 +60,8 @@ if that does not work then try
 
 .. code-block:: guess
 
-..	$ pip3 install django-nocaptcha-recaptcha
-..	$ pip3 install django-recaptcha
+	$ pip3 install django-nocaptcha-recaptcha
+	$ pip3 install django-recaptcha
 
 
 
@@ -70,9 +70,9 @@ koinrex/templates/account/signup.html
 
 .. code-block:: guess
 
-..	$ <div class="g-recaptcha" data-sitekey="xxx" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
+	$ <div class="g-recaptcha" data-sitekey="xxx" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
 
-..	and a JS code
+	and a JS code
 
 
 
