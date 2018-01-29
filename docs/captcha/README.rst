@@ -11,8 +11,9 @@ Koinrex signup with recaptcha
 
 * Then select V2 and for domain type in 127.0.0.1
 
+===============
 Changelog notes
----------------
+===============
 
 * I updated the Koinrex login
 
@@ -39,12 +40,12 @@ Changelog notes
 
       <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" data-theme="dark"></div>
 
-
+==============
 Things to note
---------------
+==============
 
 config/settings/base.py
-=======================
+-----------------------
 
 **GOOGLE_RECAPTCHA_SITE_KEY** = "xxx"
 
@@ -56,7 +57,7 @@ config/settings/base.py
 
 
 requirements/local.txt
-======================
+----------------------
 
 * 2 new packages for install, so please re-run `pip 3 install -r requirements/local.txt`
 
@@ -69,7 +70,7 @@ requirements/local.txt
 
 
 koinrex/templates/account/signup.html
-=====================================
+-------------------------------------
 
 * Please make sure that the keys are correct in all the places including this HTML file
 
