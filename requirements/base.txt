@@ -43,6 +43,10 @@ pytz==2017.3
 django-redis==4.8.0
 redis>=2.10.5
 
+#recaptcha packages
+ 
+django-nocaptcha-recaptcha
+django-recaptcha
 
 
 
