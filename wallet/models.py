@@ -3,15 +3,10 @@ from koinrex.users.models import User
 
 import uuid
 
-from wallet import wrappers
+from bit import Key
 
 # Create your models here.
 
-
-ASSET_TYPES = (
-    ('FOO', 'Footype'),
-    ('BAR', 'Bartype'),
-)
 
 TRANSACTION_TYPES = (
     ('S', 'Send'),
@@ -33,7 +28,6 @@ class Currency(models.Model):
     name = models.CharField(max_length=64)
     min_divisible_unit = models.DecimalField(max_digits=16, decimal_places=16)
     symbol = models.CharField(max_length=16)
-    asset_type = models.CharField(max_length=3, choices=ASSET_TYPES)
 
     def __str__(self):
         return self.name
@@ -47,20 +41,20 @@ class Address(models.Model):
     """
     Description: Model Description
     """
-    # secret_key = models.CharField(
-    #     max_length=64, default=Key(), editable=False, unique=True)
-    secret_key = models.CharField(max_length=64, unique=True, editable=False)
-    public_key = models.CharField(max_length=64, unique=True, editable=False)
+    secret_key = models.CharField(max_length=64, unique=True)
+    # public_key = secret_key.address
+    # secret_key = Key().address
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __init__(self):
-        self.secret_key = wrappers.generate_key
-        self.public_key = wrappers.show_pub_key
-        # self.save()
-
     def __str__(self):
-        return self.public_key
+        # return self.secret_key
+        return self.secret_key
+
+    @classmethod
+    def create(cls, secret_key):
+        address = cls(secret_key=Key.address)
+        return address
 
     class Meta:
         verbose_name = 'Address'
@@ -99,8 +93,7 @@ class Transaction(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     received_at = models.DateTimeField()
-    status = models.CharField(
-        max_length=3, choices=STATUSES)
+    status = models.CharField(max_length=3, choices=STATUSES)
 
     # TODO add from and to address fields; think of a nice way to do this
 
