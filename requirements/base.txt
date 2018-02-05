@@ -47,10 +47,12 @@ redis>=2.10.5
 
 # Your custom requirements go here
 
+# Django 2FA
+django-allauth-2fa==0.5
+
 # Sentry Logging
 raven==6.5.0
 
 # Recaptcha packages
-
 django-nocaptcha-recaptcha
 django-recaptcha

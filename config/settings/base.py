@@ -58,6 +58,16 @@ LOCAL_APPS = [
     # custom users app
     'koinrex.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+
+    # Enable the django-otp package
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+
+    # Enable two-factor auth package
+    # (https://django-allauth-2fa.readthedocs.io)
+
+    'allauth_2fa',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -73,6 +83,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Configure the django-otp package. Note this must be after the
+    # AuthenticationMiddleware.
+    'django_otp.middleware.OTPMiddleware',
+
+    # Reset login flow middleware. If this middleware is included, the login
+    # flow is reset if another page is loaded between login and successfully
+    # entering two-factor credentials.
+    'allauth_2fa.middleware.AllauthTwoFactorMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -268,7 +287,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool(
     'DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'koinrex.users.adapters.AccountAdapter'
+
+# Set the allauth adapter to be the 2FA adapter.
+ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
+# ACCOUNT_ADAPTER = 'koinrex.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'koinrex.users.adapters.SocialAccountAdapter'
 
 # Custom user app defaults
