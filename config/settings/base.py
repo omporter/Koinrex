@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'raven.contrib.django.raven_compat',  # raven logging
 ]
 
 # Apps specific for this project go here.
@@ -286,7 +287,20 @@ ADMIN_URL = r'^admin/'
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
 
+# Settings for Sentry logging
+
+import os
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': 'https://d04134052d454418a141fd35631c31ab:45e85b8bc1c84d0abfc4c8ab150a1a9a@sentry.io/278864',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
+}
+
 # Recaptcha keys
+
 GOOGLE_RECAPTCHA_SITE_KEY = "6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u"
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdJ9kAUAAAAAPhvh0irz2YDBlqPvWl9R7yYg_bL'
 NOCAPTCHA = True
