@@ -1,10 +1,10 @@
 {% extends "account/base.html" %}
-
+{% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}{% trans "Sign In" %} {% endblock %}
 
 {% block inner %}
 
@@ -40,9 +40,30 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
+
+  <script src='https://www.google.com/recaptcha/api.js'></script> 
+
+  <div class="g-recaptcha" data-sitekey="6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback" data-type="image" ></div>
+  <br />
+
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+  
+  <button class="primaryAction btn btn-primary" type="submit" id="recaptcha-submit" disabled>{% trans "Sign In" %}</button>
 </form>
+
+
+<script type = "text/javascript">
+
+    var recaptchaCallback = function(resp) {    
+        document.getElementById("recaptcha-submit").disabled = false;
+    };
+    var recaptchaExpiredCallback = function(resp) { 
+        document.getElementById("recaptcha-submit").disabled = true; 
+    };
+
+
+</script>
+
 
 {% endblock %}
 
