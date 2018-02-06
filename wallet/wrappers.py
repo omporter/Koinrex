@@ -1,11 +1,18 @@
 from bit import Key
-
-key = Key()
-
-
-def generate_key():
-    return key
+# from IPython import embed
 
 
-def show_pub_key():
-    return key.address
+class Keygen(Key):
+    sec = ''
+    pub = ''
+
+    def generate_key(self):
+        self.sec = self.to_wif()
+        return self.sec
+
+    def pub_key(self):
+        self.pub = self.address
+        return self.pub
+
+# key1 = Keygen()
+# embed()

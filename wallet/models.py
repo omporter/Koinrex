@@ -1,9 +1,10 @@
 from django.db import models
 from koinrex.users.models import User
 
-import uuid
+# import uuid
 
-from bit import Key
+# from bit import Key
+from . wrappers import Keygen
 
 # Create your models here.
 
@@ -38,23 +39,21 @@ class Currency(models.Model):
 
 
 class Address(models.Model):
+    a = Keygen()
     """
     Description: Model Description
     """
-    secret_key = models.CharField(max_length=64, unique=True)
-    # public_key = secret_key.address
-    # secret_key = Key().address
+    s_key = models.CharField(
+        max_length=64, default=a.generate_key, unique=True, editable=False, name='Secret Key')
+    p_key = models.CharField(
+        max_length=34, default=a.pub_key, unique=True, editable=False, name='Public Key')
+
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         # return self.secret_key
-        return self.secret_key
-
-    @classmethod
-    def create(cls, secret_key):
-        address = cls(secret_key=Key.address)
-        return address
+        return self.public_key
 
     class Meta:
         verbose_name = 'Address'
