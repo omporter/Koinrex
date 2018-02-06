@@ -51,4 +51,4 @@ redis>=2.10.5
 
 # Bit library
 bit==0.4.2
-coincurve==6.0.0
+coincurve==7.1.0
