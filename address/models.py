@@ -4,6 +4,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from bit import Key
 
 from wallet.models import Wallet
+from address.wrappers.litecoin import LTCKey
 
 # Create your models here.
 
@@ -50,3 +51,28 @@ class BitcoinAddress(AddressABC):
     class Meta:
         verbose_name = 'Bitcoin Address'
         verbose_name_plural = 'Bitcoin Addresses'
+
+
+class LitecoinAddress(AddressABC):
+    """
+    Description: Litecoin Address model which stores and generates the pub/sec key pair
+    """
+    batwa = GenericRelation(Wallet)
+
+    def __init__(self, *args, **kwargs):
+        super(LitecoinAddress, self).__init__(*args, **kwargs)
+        if self.sec_key == '' and self.pub_key == '':
+            # if nothing is there, create, convert and set
+            self.sec_key = str(LTCKey().keyval()['sec_key'])
+            self.pub_key = str(LTCKey().keyval()['pub_key'])
+            self.currency_min_divisible_unit = 0.00000001
+
+    # def Key(self):
+    #     return Key.from_hex(self.sec_key)
+
+    def __str__(self):
+        return self.pub_key
+
+    class Meta:
+        verbose_name = 'Litecoin Address'
+        verbose_name_plural = 'Litecoin Addresses'
