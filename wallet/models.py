@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 from koinrex.users.models import User
 
-from . wrappers import Keygen
 
 # Create your models here.
 
@@ -18,45 +20,44 @@ STATUSES = (
 )
 
 
-class Currency(models.Model):
-    """
-    Description: Model Description
-    """
-    ticker = models.CharField(max_length=16)
-    name = models.CharField(max_length=64)
-    min_divisible_unit = models.DecimalField(max_digits=16, decimal_places=16)
-    symbol = models.CharField(max_length=16)
+# class Currency(models.Model):
+#     """
+#     Description: Model Description
+#     """
+#     ticker = models.CharField(max_length=16)
+#     name = models.CharField(max_length=64)
+#     min_divisible_unit = models.DecimalField(max_digits=16, decimal_places=16)
+#     symbol = models.CharField(max_length=16)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    class Meta:
-        verbose_name = 'Currency'
-        verbose_name_plural = 'Currencies'
+#     class Meta:
+#         verbose_name = 'Currency'
+#         verbose_name_plural = 'Currencies'
 
 
-class Address(models.Model):
-    """
-    Description: Model Description
-    """
-    k = Keygen()
-    # pub, sec = keygen()
-    s_key = models.CharField(
-        max_length=64, default=k.prv_key(), unique=True, editable=False)
-    p_key = models.CharField(
-        max_length=34, default=k.pub_key(), unique=True, editable=False)
+# class Address(models.Model):
+#     """
+#     Description: Model Description
+#     """
+#     k = Keygen()
+#     # pub, sec = keygen()
+#     s_key = models.CharField(
+#         max_length=64, default=k.prv_key(), unique=True, editable=False)
+#     p_key = models.CharField(
+#         max_length=34, default=k.pub_key(), unique=True, editable=False)
 
-    currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
+#     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.p_key
+#     def __str__(self):
+#         return self.p_key
 
-    class Meta:
-        verbose_name = 'Address'
-        verbose_name_plural = 'Addresses'
+#     class Meta:
+#         verbose_name = 'Address'
+#         verbose_name_plural = 'Addresses'
 
-    
 
 class Wallet(models.Model):
     """
@@ -67,7 +68,10 @@ class Wallet(models.Model):
     usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
     amount_in = models.DecimalField(max_digits=64, decimal_places=16)
     amount_out = models.DecimalField(max_digits=64, decimal_places=16)
-    address = models.OneToOneField(Address, on_delete=models.PROTECT)
+    # address = models.OneToOneField(But, on_delete=models.PROTECT)
+    content_type = models.ForeignKey(ContentType, on_delete=models.PROTECT)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     def __str__(self):
         return "{}'s Wallet".format(self.user.name)
