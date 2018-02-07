@@ -1,18 +1,23 @@
 from bit import Key
-# from IPython import embed
 
 
-class Keygen(Key):
-    sec = ''
-    pub = ''
+class Keygen():
 
-    def generate_key(self):
-        self.sec = self.to_wif()
-        return self.sec
+    def __init__(self):
+        self.key = Key()
+        self.sec = ''
+        self.pub = ''
+
+    def prv_key(self):
+        try:
+            self.sec = self.key.to_wif()
+            return self.sec
+        except:
+            print('Error in generating private key, try again.')
 
     def pub_key(self):
-        self.pub = self.address
-        return self.pub
-
-# key1 = Keygen()
-# embed()
+        try:
+            self.sec = self.key.address
+            return self.sec
+        except:
+            print('Error in generating public key, try again.')
