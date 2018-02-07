@@ -1,10 +1,7 @@
 from django.db import models
 from koinrex.users.models import User
 
-# import uuid
-
-# from bit import Key
-from . wrappers import keygen
+from . wrappers import Keygen
 
 # Create your models here.
 
@@ -42,11 +39,12 @@ class Address(models.Model):
     """
     Description: Model Description
     """
-    pub, sec = keygen()
+    k = Keygen()
+    # pub, sec = keygen()
     s_key = models.CharField(
-        max_length=64, default=sec, unique=True, editable=False)
+        max_length=64, default=k.prv_key(), unique=True, editable=False)
     p_key = models.CharField(
-        max_length=34, default=pub, unique=True, editable=False)
+        max_length=34, default=k.pub_key(), unique=True, editable=False)
 
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -71,7 +69,7 @@ class Wallet(models.Model):
     address = models.OneToOneField(Address, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.user.name
+        return "{}'s Wallet".format(self.user.name)
 
     class Meta:
         verbose_name = 'Wallet'
