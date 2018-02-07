@@ -58,6 +58,7 @@ LOCAL_APPS = [
     'koinrex.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'wallet',
+    'address',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

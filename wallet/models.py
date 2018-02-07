@@ -1,7 +1,7 @@
 from django.db import models
 from koinrex.users.models import User
 
-from . wrappers import Keygen
+from address.models import BitcoinAddress
 
 # Create your models here.
 
@@ -22,8 +22,8 @@ class Currency(models.Model):
     """
     Description: Model Description
     """
-    ticker = models.CharField(max_length=16)
     name = models.CharField(max_length=64)
+    ticker = models.CharField(max_length=16)
     min_divisible_unit = models.DecimalField(max_digits=16, decimal_places=16)
     symbol = models.CharField(max_length=16)
 
@@ -35,28 +35,6 @@ class Currency(models.Model):
         verbose_name_plural = 'Currencies'
 
 
-class Address(models.Model):
-    """
-    Description: Model Description
-    """
-    k = Keygen()
-    # pub, sec = keygen()
-    s_key = models.CharField(
-        max_length=64, default=k.prv_key(), unique=True, editable=False)
-    p_key = models.CharField(
-        max_length=34, default=k.pub_key(), unique=True, editable=False)
-
-    currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.p_key
-
-    class Meta:
-        verbose_name = 'Address'
-        verbose_name_plural = 'Addresses'
-
-
 class Wallet(models.Model):
     """
     Description: Model Description
@@ -66,7 +44,8 @@ class Wallet(models.Model):
     usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
     amount_in = models.DecimalField(max_digits=64, decimal_places=16)
     amount_out = models.DecimalField(max_digits=64, decimal_places=16)
-    address = models.OneToOneField(Address, on_delete=models.PROTECT)
+    address = models.OneToOneField(
+        BitcoinAddress, on_delete=models.PROTECT)
 
     def __str__(self):
         return "{}'s Wallet".format(self.user.name)

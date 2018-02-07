@@ -21,3 +21,10 @@ class Keygen():
             return self.sec
         except:
             print('Error in generating public key, try again.')
+
+
+def keygen():
+    k = Key()
+    pub = k.address
+    sec = k.to_wif()
+    return pub, sec
