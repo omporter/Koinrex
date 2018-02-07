@@ -4,7 +4,7 @@ from koinrex.users.models import User
 # import uuid
 
 # from bit import Key
-from . wrappers import Keygen
+from . wrappers import keygen
 
 # Create your models here.
 
@@ -39,21 +39,20 @@ class Currency(models.Model):
 
 
 class Address(models.Model):
-    a = Keygen()
     """
     Description: Model Description
     """
+    pub, sec = keygen()
     s_key = models.CharField(
-        max_length=64, default=a.generate_key, unique=True, editable=False, name='Secret Key')
+        max_length=64, default=sec, unique=True, editable=False)
     p_key = models.CharField(
-        max_length=34, default=a.pub_key, unique=True, editable=False, name='Public Key')
+        max_length=34, default=pub, unique=True, editable=False)
 
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        # return self.secret_key
-        return self.public_key
+        return self.p_key
 
     class Meta:
         verbose_name = 'Address'
