@@ -7,7 +7,7 @@ from .models import BitcoinAddress, LitecoinAddress
 
 class AddressAdminABC(admin.ModelAdmin):
     list_display = ('id', 'pub_key', 'created_at',
-                    'currency_name', 'user', 'balance', 'usd_balance',)
+                    'currency_name', 'user', 'balance',)
     list_display_links = ('pub_key', 'user', 'currency_name',)
     list_filter = ('user', 'created_at', 'balance',)
     search_fields = ('user', 'created_at')

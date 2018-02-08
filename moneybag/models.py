@@ -19,16 +19,17 @@ class AddressABC(models.Model):
         max_length=64, unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     transaction_count = models.IntegerField()
-    usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
+    # usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
     balance = models.DecimalField(max_digits=64, decimal_places=16)
     amount_in = models.DecimalField(max_digits=64, decimal_places=16)
     amount_out = models.DecimalField(max_digits=64, decimal_places=16)
 
     @classmethod
-    def get_moneybags(self):
-        # should return all Child class instances that match the given user's
-        # id
-        pass
+    def get_total_balance(cls, user_id):
+        bal = 0
+        for coin_addr in cls.__subclasses__():
+            bal += coin_addr.objects.get(user=user_id).balance
+        return bal
 
     class Meta:
         abstract = True
@@ -125,19 +126,21 @@ class LitecoinAddress(AddressABC, CurrencyABC):
 # Maybe make a transactions app to handle wallet transactions?
 
 """
-TRANSACTION_TYPES = (
-    ('S', 'Send'),
-    ('R', 'Receive'),
-)
 
-STATUSES = (
-    ('PEN', 'Pending'),
-    ('PRO', 'Processing'),
-    ('COM', 'Completed'),
-)
 
 class TransactionsABC(models.Model):
+    TRANSACTION_TYPES = (
+        ('S', 'Send'),
+        ('R', 'Receive'),
+    )
     transaction_type = models.CharField(
+
+    STATUSES = (
+        ('PEN', 'Pending'),
+        ('PRO', 'Processing'),
+        ('COM', 'Completed'),
+    )
+
     max_length=1, choices=TRANSACTION_TYPES)
     transaction_id = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=64, decimal_places=16)
