@@ -58,7 +58,7 @@ class LTCKey:
         return wall
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    wallet = LTCKey()
-    print(wallet.keyval())
+#     wallet = LTCKey()
+#     print(wallet.keyval())
