@@ -1,9 +1,7 @@
 from django.test import TestCase
 from .models import BitcoinAddress, LitecoinAddress
-
+from address.wrappers.litecoin import LTCKey
 # Create your tests here.
-
-# TODO 1 - Refactor Litecoin Test Case
 
 
 class BitcoinAddressTestCase(TestCase):
@@ -32,13 +30,27 @@ class LitecoinAddressTestCase(TestCase):
         self.assertNotEqual(la, None)
         self.assertNotEqual(la.sec_key, '')
 
-        # TODO 1
+        '''
+        Generate a new key and test if its not equal to the stored key
+        '''
+        
+        pair = LTCKey()
+        pvt_key = str(pair.keyval()['sec_key'])
+        pub_key = str(pair.keyval()['pub_key'])
 
-        # k = ba.key_object()
-        # pvt_key = str(k.to_hex())
-        # pub_key = str(k.public_key)
+    
+        fresh = LitecoinAddress.objects.get(id=1)
 
-        # test you don't overwrite it when loading from db
-        # fresh = LitecoinAddress.objects.get(id=1)
-        # self.assertEqual(pvt_key, str(fresh.key_object().to_hex()))
-        # self.assertEqual(pub_key, str(fresh.key_object().public_key))
+    
+        self.assertNotEqual(pvt_key, str(fresh.sec_key))
+        self.assertNotEqual(pub_key, str(fresh.pub_key))
+
+
+        '''
+        get public and private key from model and test if value exists in database
+        '''
+        pv_key,pu_key = la.key_object()
+        
+        self.assertEqual(pu_key, str(fresh.pub_key))
+        self.assertEqual(pv_key, str(fresh.sec_key))
+        

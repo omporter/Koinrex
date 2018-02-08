@@ -75,6 +75,9 @@ class LitecoinAddress(AddressABC):
             self.pub_key = str(pair.keyval()['pub_key'])
             self.currency_min_divisible_unit = 0.00000001
 
+    def key_object(self):
+        return (self.sec_key,self.pub_key)
+
     def __str__(self):
         return self.pub_key
 
