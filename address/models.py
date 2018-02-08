@@ -32,6 +32,7 @@ class BitcoinAddress(AddressABC):
     """
     Description: Bitcoin Address model which stores and generates the pub/sec key pair
     """
+    # Connection to wallet model within wallet app
     batwa = GenericRelation(Wallet)
 
     def __init__(self, *args, **kwargs):
@@ -39,11 +40,16 @@ class BitcoinAddress(AddressABC):
         if self.sec_key == '' and self.pub_key == '':
             # if nothing is there, create, convert and set
             self.sec_key = str(Key().to_hex())
-            self.pub_key = str(Key().address)
+            self.pub_key = str(Key.from_hex(self.sec_key).address)
             self.currency_min_divisible_unit = 0.00000001
 
-    def Key(self):
+    def key_object(self):
+        # returns Key object
         return Key.from_hex(self.sec_key)
+
+    def wif(self):
+        # returns priv. key only as a string (WIF)
+        return self.key_object().to_wif()
 
     def __str__(self):
         return self.pub_key
@@ -57,18 +63,17 @@ class LitecoinAddress(AddressABC):
     """
     Description: Litecoin Address model which stores and generates the pub/sec key pair
     """
+    # Connection to wallet model within wallet app
     batwa = GenericRelation(Wallet)
 
     def __init__(self, *args, **kwargs):
         super(LitecoinAddress, self).__init__(*args, **kwargs)
         if self.sec_key == '' and self.pub_key == '':
             # if nothing is there, create, convert and set
-            self.sec_key = str(LTCKey().keyval()['sec_key'])
-            self.pub_key = str(LTCKey().keyval()['pub_key'])
+            pair = LTCKey()
+            self.sec_key = str(pair.keyval()['sec_key'])
+            self.pub_key = str(pair.keyval()['pub_key'])
             self.currency_min_divisible_unit = 0.00000001
-
-    # def Key(self):
-    #     return Key.from_hex(self.sec_key)
 
     def __str__(self):
         return self.pub_key

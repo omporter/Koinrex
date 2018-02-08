@@ -20,55 +20,18 @@ STATUSES = (
 )
 
 
-# class Currency(models.Model):
-#     """
-#     Description: Model Description
-#     """
-#     ticker = models.CharField(max_length=16)
-#     name = models.CharField(max_length=64)
-#     min_divisible_unit = models.DecimalField(max_digits=16, decimal_places=16)
-#     symbol = models.CharField(max_length=16)
-
-#     def __str__(self):
-#         return self.name
-
-#     class Meta:
-#         verbose_name = 'Currency'
-#         verbose_name_plural = 'Currencies'
-
-
-# class Address(models.Model):
-#     """
-#     Description: Model Description
-#     """
-#     k = Keygen()
-#     # pub, sec = keygen()
-#     s_key = models.CharField(
-#         max_length=64, default=k.prv_key(), unique=True, editable=False)
-#     p_key = models.CharField(
-#         max_length=34, default=k.pub_key(), unique=True, editable=False)
-
-#     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return self.p_key
-
-#     class Meta:
-#         verbose_name = 'Address'
-#         verbose_name_plural = 'Addresses'
-
-
 class Wallet(models.Model):
     """
-    Description: Model Description
+    Description: Wallet model that stores information with regards to a particular connected address
     """
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    balance = models.DecimalField(max_digits=64, decimal_places=16)
     usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
+    balance = models.DecimalField(max_digits=64, decimal_places=16)
     amount_in = models.DecimalField(max_digits=64, decimal_places=16)
     amount_out = models.DecimalField(max_digits=64, decimal_places=16)
-    # address = models.OneToOneField(But, on_delete=models.PROTECT)
+
+    # Using ContentType to create generic relations between wallet and address
+    # models
     content_type = models.ForeignKey(ContentType, on_delete=models.PROTECT)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -83,7 +46,7 @@ class Wallet(models.Model):
 
 class Transaction(models.Model):
     """
-    Description: Model Description
+    Description: Transaction model that stores data regarding a deposit or a withdrawal
     """
     transaction_type = models.CharField(
         max_length=1, choices=TRANSACTION_TYPES)
@@ -113,4 +76,5 @@ class Portfolio(models.Model):
     pass
 
     class Meta:
-        pass
+        verbose_name = 'Portfolio'
+        verbose_name_plural = 'Portfolios'
