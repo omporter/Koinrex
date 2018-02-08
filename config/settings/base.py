@@ -68,6 +68,9 @@ LOCAL_APPS = [
     # (https://django-allauth-2fa.readthedocs.io)
 
     'allauth_2fa',
+
+    # Enable Moneybag (Wallet) app
+    'moneybag',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

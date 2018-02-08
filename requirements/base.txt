@@ -56,3 +56,7 @@ raven==6.5.0
 # Recaptcha packages
 django-nocaptcha-recaptcha
 django-recaptcha
+
+# Moneybag (Wallet)
+ecdsa==0.13
+base58==0.2.5
