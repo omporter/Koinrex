@@ -6,12 +6,11 @@ from moneybag.wrappers.coinbin import convert
 
 from bit import Key
 
-# Import for converting float to decimal in AddressABC 
+# Import for converting float to decimal in AddressABC
 
 import decimal
 
 # Create your models here.
-
 
 
 class AddressABC(models.Model):
@@ -25,47 +24,75 @@ class AddressABC(models.Model):
         max_length=64, unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     transaction_count = models.IntegerField()
-    balance = models.DecimalField(max_digits=64, decimal_places=16)
-    amount_in = models.DecimalField(max_digits=64, decimal_places=16)
-    amount_out = models.DecimalField(max_digits=64, decimal_places=16)
+    balance = models.DecimalField(max_digits=32, decimal_places=8)
+    amount_in = models.DecimalField(max_digits=32, decimal_places=8)
+    amount_out = models.DecimalField(max_digits=32, decimal_places=8)
+    # TODO add trading balance
 
-    @classmethod
+    @classmethod  # TODO modify to return a dictionary of values against its corresponding coin
     def get_total_balance(cls, user_id):
         bal = 0
         for coin_addr in cls.__subclasses__():
             bal += coin_addr.objects.get(user=user_id).balance
         return bal
 
-    @classmethod
+    @classmethod  # Returns each instance of user's wallet (different coins)
     def get_user_moneybag(cls, user_id):
         moneybag = []
         for coin_addr in cls.__subclasses__():
             moneybag.append(coin_addr.objects.get(user=user_id))
         return moneybag
 
+    # 8 decimal places
     @classmethod
     def get_btc_value(cls, user_id):
-        
         btc_val = 0
         for coin_addr in cls.__subclasses__():
             user_object = coin_addr.objects.get(user=user_id)
             # If ticker == BTC then convert value and add to current balance
             if user_object.currency_ticker == 'BTC':
                 btc_val += user_object.balance
-                print(btc_val)
             else:
-                btc_val += (user_object.balance * decimal.Decimal(convert(user_object.currency_ticker, 'BTC')))
+                btc_val += (user_object.balance *
+                            decimal.Decimal(convert(user_object.currency_ticker, 'BTC')))
         return btc_val
+
+    @classmethod
+    def get_usd_value():
+        pass
+
+    @classmethod
+    def fetch_tx_count():
+        # blockchain: keep tx count synced
+        pass
+
+    @classmethod
+    def fetch_balance():
+        # blockchain: keep balance synced
+        pass
+
+    @classmethod
+    def fetch_amt_in():
+        # blockchain
+        pass
+
+    @classmethod
+    def fetch_amt_out():
+        # blockchain
+        pass
 
     class Meta:
         abstract = True
 
 
+# TODO might need to convert this to a concrete class as we need to refer
+# to it in the transactions table
+
 class CurrencyABC(models.Model):
     """
     Description: Abstract base class for Cryptocoin Currency model
     """
-    currency_name = models.CharField(max_length=64, editable=False)
+    currency_name = models.CharField(max_length=32, editable=False)
     currency_ticker = models.CharField(max_length=16, editable=False)
     currency_min_div_unit = models.DecimalField(
         max_digits=12, decimal_places=12, editable=False)
@@ -147,39 +174,52 @@ class TransactionsABC(models.Model):
         ('S', 'Send'),
         ('R', 'Receive'),
     )
-    
+
     STATUSES = (
         ('PEN', 'Pending'),
         ('PRO', 'Processing'),
         ('COM', 'Completed'),
     )
 
-    transaction_type = models.CharField(
-    max_length=1, choices=TRANSACTION_TYPES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPES)
     transaction_id = models.CharField(max_length=64)
+
+    # TODO Not there in deposit, but there in withdrawals
     amount = models.DecimalField(max_digits=64, decimal_places=16)
+
+    # TODO Not there in deposit, but there in withdrawals
     fee = models.DecimalField(max_digits=64, decimal_places=16)
     confirmations = models.IntegerField()
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
     received_at = models.DateTimeField()
-    status = models.CharField(max_length=3, choices=STATUSES)
+
+    # TODO Status is not needed
+    # status = models.CharField(max_length=3, choices=STATUSES)
 
     # TODO add from and to address fields; think of a nice way to do this
+    # TODO add currency id foreign key, so we can use only one deposit and withdrawal table
 
     def __str__(self):
         return self.transaction_id
 
+    @classmethod
+    def deposit(userid,coin,to_address):
+        pass
+
+    @classmethod
+    def withdraw(userid,coin,to_address):
+        pass
+
+
     class Meta:
         abstract = True
-        
-    pass
 
 
 class Deposits(TransactionABC): # TODO
-    pass
+    from_address
 
 
 class Withdrawals(TransactionABC): # TODO
-    pass
+    to_address
 """
