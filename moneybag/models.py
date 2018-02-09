@@ -6,7 +6,12 @@ from moneybag.wrappers.coinbin import convert
 
 from bit import Key
 
+# Import for converting float to decimal in AddressABC 
+
+import decimal
+
 # Create your models here.
+
 
 
 class AddressABC(models.Model):
@@ -40,15 +45,16 @@ class AddressABC(models.Model):
 
     @classmethod
     def get_btc_value(cls, user_id):
-        import decimal
+        
         btc_val = 0
         for coin_addr in cls.__subclasses__():
-            if coin_addr.objects.get(user=user_id).currency_ticker == 'BTC':
-                btc_val += coin_addr.objects.get(user=user_id).balance
+            user_object = coin_addr.objects.get(user=user_id)
+            # If ticker == BTC then convert value and add to current balance
+            if user_object.currency_ticker == 'BTC':
+                btc_val += user_object.balance
                 print(btc_val)
-            elif coin_addr.objects.get(user=user_id).currency_ticker != 'BTC':
-                btc_val += (coin_addr.objects.get(user=user_id).balance * decimal.Decimal(
-                    convert(coin_addr.objects.get(user=user_id).currency_ticker, 'BTC')))
+            else:
+                btc_val += (user_object.balance * decimal.Decimal(convert(user_object.currency_ticker, 'BTC')))
         return btc_val
 
     class Meta:
@@ -141,14 +147,14 @@ class TransactionsABC(models.Model):
         ('S', 'Send'),
         ('R', 'Receive'),
     )
-    transaction_type = models.CharField(
-
+    
     STATUSES = (
         ('PEN', 'Pending'),
         ('PRO', 'Processing'),
         ('COM', 'Completed'),
     )
 
+    transaction_type = models.CharField(
     max_length=1, choices=TRANSACTION_TYPES)
     transaction_id = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=64, decimal_places=16)
@@ -165,8 +171,8 @@ class TransactionsABC(models.Model):
         return self.transaction_id
 
     class Meta:
-        verbose_name = 'Transaction'
-        verbose_name_plural = 'Transactions'
+        abstract = True
+        
     pass
 
 
