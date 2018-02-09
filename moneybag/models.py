@@ -2,6 +2,7 @@ from django.db import models
 
 from koinrex.users.models import User
 from moneybag.wrappers.litecoin import LTCKey
+from moneybag.wrappers.coinbin import convert
 
 from bit import Key
 
@@ -19,7 +20,6 @@ class AddressABC(models.Model):
         max_length=64, unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     transaction_count = models.IntegerField()
-    # usd_balance = models.DecimalField(max_digits=64, decimal_places=8)
     balance = models.DecimalField(max_digits=64, decimal_places=16)
     amount_in = models.DecimalField(max_digits=64, decimal_places=16)
     amount_out = models.DecimalField(max_digits=64, decimal_places=16)
@@ -31,14 +31,28 @@ class AddressABC(models.Model):
             bal += coin_addr.objects.get(user=user_id).balance
         return bal
 
+    @classmethod
+    def get_user_moneybag(cls, user_id):
+        moneybag = []
+        for coin_addr in cls.__subclasses__():
+            moneybag.append(coin_addr.objects.get(user=user_id))
+        return moneybag
+
+    @classmethod
+    def get_btc_value(cls, user_id):
+        import decimal
+        btc_val = 0
+        for coin_addr in cls.__subclasses__():
+            if coin_addr.objects.get(user=user_id).currency_ticker == 'BTC':
+                btc_val += coin_addr.objects.get(user=user_id).balance
+                print(btc_val)
+            elif coin_addr.objects.get(user=user_id).currency_ticker != 'BTC':
+                btc_val += (coin_addr.objects.get(user=user_id).balance * decimal.Decimal(
+                    convert(coin_addr.objects.get(user=user_id).currency_ticker, 'BTC')))
+        return btc_val
+
     class Meta:
         abstract = True
-
-
-class AddressManager(models.Manager):
-
-    def get_all_users_addresses(self):
-        return self.get(id=self.user)
 
 
 class CurrencyABC(models.Model):
@@ -88,9 +102,6 @@ class BitcoinAddress(AddressABC, CurrencyABC):
         verbose_name = 'Bitcoin Address'
         verbose_name_plural = 'Bitcoin Addresses'
 
-    # Assign Address manager to coin model
-    objects = AddressManager()
-
 
 class LitecoinAddress(AddressABC, CurrencyABC):
     """
@@ -118,9 +129,6 @@ class LitecoinAddress(AddressABC, CurrencyABC):
     class Meta:
         verbose_name = 'Litecoin Address'
         verbose_name_plural = 'Litecoin Addresses'
-
-    # Assign Address manager to coin model
-    objects = AddressManager()
 
 
 # Maybe make a transactions app to handle wallet transactions?
