@@ -60,3 +60,7 @@ django-recaptcha
 # Moneybag (Wallet)
 ecdsa==0.13
 base58==0.2.5
+
+# Blockchain wrapper
+blockcypher==1.0.73
+
