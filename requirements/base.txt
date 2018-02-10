@@ -61,6 +61,10 @@ django-recaptcha
 ecdsa==0.13
 base58==0.2.5
 
+# Bit library
+bit==0.4.2
+coincurve==7.1.0
+
 # Blockchain wrapper
 blockcypher==1.0.73
 
