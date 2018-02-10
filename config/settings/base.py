@@ -28,6 +28,7 @@ if READ_DOT_ENV_FILE:
     env.read_env(env_file)
     print('The .env file has been loaded. See base.py for more information')
 
+
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
@@ -38,7 +39,6 @@ DJANGO_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # Useful template tags:
     # 'django.contrib.humanize',
 
@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'raven.contrib.django.raven_compat',  # raven logging
 ]
 
 # Apps specific for this project go here.
@@ -57,8 +58,19 @@ LOCAL_APPS = [
     # custom users app
     'koinrex.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'wallet',
-    'address',
+
+    # Enable the django-otp package
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+
+    # Enable two-factor auth package
+    # (https://django-allauth-2fa.readthedocs.io)
+
+    'allauth_2fa',
+
+    # Enable Moneybag (Wallet) app
+    'moneybag',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -74,6 +86,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Configure the django-otp package. Note this must be after the
+    # AuthenticationMiddleware.
+    'django_otp.middleware.OTPMiddleware',
+
+    # Reset login flow middleware. If this middleware is included, the login
+    # flow is reset if another page is loaded between login and successfully
+    # entering two-factor credentials.
+    'allauth_2fa.middleware.AllauthTwoFactorMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -269,7 +290,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool(
     'DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'koinrex.users.adapters.AccountAdapter'
+
+# Set the allauth adapter to be the 2FA adapter.
+ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
+# ACCOUNT_ADAPTER = 'koinrex.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'koinrex.users.adapters.SocialAccountAdapter'
 
 # Custom user app defaults
@@ -287,3 +311,21 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+# Settings for Sentry logging
+
+import os
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': 'https://d04134052d454418a141fd35631c31ab:45e85b8bc1c84d0abfc4c8ab150a1a9a@sentry.io/278864',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
+}
+
+# Recaptcha keys
+
+GOOGLE_RECAPTCHA_SITE_KEY = "6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u"
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdJ9kAUAAAAAPhvh0irz2YDBlqPvWl9R7yYg_bL'
+NOCAPTCHA = True

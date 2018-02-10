@@ -31,30 +31,30 @@ Setting Up Your Users
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
-Test coverage
-^^^^^^^^^^^^^
+.. Test coverage
+.. ^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report:
+.. To run the tests, check your test coverage, and generate an HTML coverage report:
 
-.. code-block:: guess
+.. .. code-block:: guess
 
-    $ coverage run manage.py test
-    $ coverage html
-    $ open htmlcov/index.html
+..     $ coverage run manage.py test
+..     $ coverage html
+..     $ open htmlcov/index.html
 
-Running tests with py.test
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Running tests with py.test
+.. ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: guess
+.. .. code-block:: guess
 
-    $ py.test
+..     $ py.test
 
-Live reloading and Sass CSS compilation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. Live reloading and Sass CSS compilation
+.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Moved to `Live reloading and SASS compilation`_.
+.. Moved to `Live reloading and SASS compilation`_.
 
-.. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
+.. .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
 Deployment
 ----------
@@ -75,3 +75,30 @@ To deploy locally for development on your machine:
     $ pip3 install -r requirements/local.txt
     $ ./manage.py migrate
     $ ./manage.py runserver
+
+Contributing & Creating a Feature Branch
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instructions for creating a feature branch and contributing to the codebase.
+
+The following code below shows the commands to run when building a new feature, namely ``water-on-mars``. Make sure to use the namespace used below for consistency, i.e. using the ``feature`` tag before the actual name of the feature, separated by a ``/``.
+
+.. code-block:: guess
+
+    $ git checkout -b feature/water-on-mars
+
+Make all your changes for the feature development on the newly created feature. When pushing to Gitlab, use this:
+
+.. code-block:: guess
+
+    $ git push origin feature/water-on-mars
+
+Once done with the feature development, merge the latest copy of the ``master`` branch into your feature branch. The reason we do this is because any conflict resolution can be done on the feature branch as opposed to the master branch. On your ``feature/water-on-mars``, run the following command:
+
+.. code-block:: guess
+
+    $ git merge master
+
+Resolve any conflicts that may arise and commit the merge to the feature branch.
+
+Once that is done, create a merge request for your feature branch to commit into the master branch. This needs to be done from the repository on Gitlab. (https://gitlab.com/koinrex/koinrex/merge_requests)
