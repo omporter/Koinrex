@@ -19,3 +19,9 @@ def home(request):
      
     context = {'coins': result}
     return render(request, 'moneybag/wallet_home.html', context)
+
+def withdrawals(request):
+    current_user = request.user
+    current_user_id = current_user.id
+    context = {}
+    return render(request, 'moneybag/wallet_withdrawal.html', context)

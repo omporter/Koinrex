@@ -40,6 +40,10 @@
               <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
             </li>
             <li class="nav-item">
+              {# Go to users wallet #}
+              <a class="nav-link" href="/wallet/home">Wallet</a>
+            </li>
+            <li class="nav-item">
               {# URL provided by django-allauth/account/urls.py #}
               <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
             </li>
