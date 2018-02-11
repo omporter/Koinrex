@@ -55,9 +55,9 @@
                         <td>{{item.user_coin}}</td>
                         <td>{{item.user_balance}}</td>
                         <td>{{item.coin_btc_value}}</td>
-                        <td><button class="btn btn-dark btn-sm" type="button">Deposit</button></td>
-                        <td><button class="btn btn-dark btn-sm" type="button">Withdraw</button></td>
-                        <td><button class="btn btn-dark btn-sm" type="button">Trade</button></td>
+                        <td><a href="/wallet/deposits/?coin={{item.user_coin}}"><button class="btn btn-dark btn-sm" type="button">Deposit</button></a></td>
+                        <td><a href="/wallet/withdrawals/?coin={{item.user_coin}}"><button class="btn btn-dark btn-sm" type="button">Withdraw</button></a></td>
+                        <td><a href="/wallet/trade/?coin={{item.user_coin}}"><button class="btn btn-dark btn-sm" type="button">Trade</button></a></td>
                     </tr>
                 {%endfor%}
             </tbody>
