@@ -32,10 +32,13 @@ class AddressABC(models.Model):
     pub_key = models.CharField(
         max_length=64, unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    transaction_count = models.IntegerField()
-    balance = models.DecimalField(max_digits=32, decimal_places=8)
-    amount_received = models.DecimalField(max_digits=32, decimal_places=8)
-    amount_sent = models.DecimalField(max_digits=32, decimal_places=8)
+    transaction_count = models.IntegerField(default=0)
+    balance = models.DecimalField(
+        max_digits=32, decimal_places=8, default=0.00000001)
+    amount_received = models.DecimalField(
+        max_digits=32, decimal_places=8, default=0.00000001)
+    amount_sent = models.DecimalField(
+        max_digits=32, decimal_places=8, default=0.00000001)
 
     # Returns JSON for user's coins and their corresponding balances
     @classmethod
@@ -55,7 +58,8 @@ class AddressABC(models.Model):
         moneybag = {}
         for coin_addr in cls.__subclasses__():
             user_object = coin_addr.objects.get(user=user_id)
-            moneybag.update({str(user_object.currency_name): str(user_object.pub_key)})
+            moneybag.update({str(user_object.currency_name)
+                            : str(user_object.pub_key)})
         return JsonResponse(moneybag)
 
     # TODO 1 = make return value precision to 8 decimal places
@@ -102,7 +106,10 @@ class AddressABC(models.Model):
             user_object.transaction_count = current_tx_count
             user_object.save()
             updated.update(
-                {user_object: {'email': user_object.user.email, 'coin': ticker, 'address': address, 'updated_tx_count': user_object.transaction_count}})
+                {user_object: {'email': user_object.user.email,
+                               'coin': ticker,
+                               'address': address,
+                               'updated_tx_count': user_object.transaction_count}})
         return updated
 
     # Fetches all current balances from blockchain for all addresses of a
@@ -119,7 +126,10 @@ class AddressABC(models.Model):
             user_object.balance = current_balance
             user_object.save()
             updated.update(
-                {user_object: {'email': user_object.user.email, 'coin': ticker, 'address': address, 'updated_balance': user_object.balance}})
+                {user_object: {'email': user_object.user.email,
+                               'coin': ticker,
+                               'address': address,
+                               'updated_balance': user_object.balance}})
         return updated
 
     # Fetches all amount received's from blockchain for all addresses of a
@@ -136,7 +146,10 @@ class AddressABC(models.Model):
             user_object.amount_received = current_received
             user_object.save()
             updated.update(
-                {user_object: {'email': user_object.user.email, 'coin': ticker, 'address': address, 'updated_amt_received': user_object.amount_received}})
+                {user_object: {'email': user_object.user.email,
+                               'coin': ticker,
+                               'address': address,
+                               'updated_amt_received': user_object.amount_received}})
         return updated
 
     # Fetches all amount sent's from blockchain for all addresses of a
@@ -153,7 +166,10 @@ class AddressABC(models.Model):
             user_object.amount_sent = current_sent
             user_object.save()
             updated.update(
-                {user_object: {'email': user_object.user.email, 'coin': ticker, 'address': address, 'updated_amt_sent': user_object.amount_sent}})
+                {user_object: {'email': user_object.user.email,
+                               'coin': ticker,
+                               'address': address,
+                               'updated_amt_sent': user_object.amount_sent}})
         return updated
 
     class Meta:
@@ -170,12 +186,15 @@ class CurrencyABC(models.Model):
         max_digits=12, decimal_places=12, editable=False)
     currency_symbol = models.CharField(max_length=2, null=True, editable=False)
 
+    # Returns all the coins in the Koinrex universe
     @classmethod
     def get_list_of_coins(cls):
         coin_list = list()
         coin_dict = dict()
         for coins in cls.__subclasses__():
-            coin_list.append(coins.objects.get().currency_name)
+            # FIXME = Hardcoded first element to query only the first instance
+            # of that Currency class
+            coin_list.append(coins.objects.get(id=1).currency_name)
         payload = {'coin_list': coin_list}
         coin_dict.update(payload)
         return JsonResponse(coin_dict)
@@ -244,66 +263,3 @@ class LitecoinAddress(AddressABC, CurrencyABC):
     class Meta:
         verbose_name = 'Litecoin Address'
         verbose_name_plural = 'Litecoin Addresses'
-
-
-# TODO 3 = Maybe make a transactions app to handle wallet transactions?
-
-"""
-
-
-class TransactionsABC(models.Model):
-    TRANSACTION_TYPES = (
-        ('S', 'Send'),
-        ('R', 'Receive'),
-    )
-
-    STATUSES = (
-        ('PEN', 'Pending'),
-        ('PRO', 'Processing'),
-        ('COM', 'Completed'),
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    transaction_type = models.CharField(
-        max_length=1, choices=TRANSACTION_TYPES)
-    transaction_id = models.CharField(max_length=64)
-
-    # TODO Not there in deposit, but there in withdrawals
-    amount = models.DecimalField(max_digits=64, decimal_places=16)
-
-    # TODO Not there in deposit, but there in withdrawals
-    fee = models.DecimalField(max_digits=64, decimal_places=16)
-    confirmations = models.IntegerField()
-    wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
-    received_at = models.DateTimeField()
-
-    # TODO Status is not needed
-    # status = models.CharField(max_length=3, choices=STATUSES)
-
-    # TODO add from and to address fields; think of a nice way to do this
-    # TODO add currency id foreign key, so we can use only one deposit and
-    # withdrawal table
-
-    def __str__(self):
-        return self.transaction_id
-
-    @classmethod
-    def deposit(userid,coin,to_address):
-        pass
-
-    @classmethod
-    def withdraw(userid,coin,to_address):
-        pass
-
-
-    class Meta:
-        abstract = True
-
-
-class Deposits(TransactionABC): # TODO
-    from_address
-
-
-class Withdrawals(TransactionABC): # TODO
-    to_address
-"""
