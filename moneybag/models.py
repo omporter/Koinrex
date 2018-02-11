@@ -3,7 +3,7 @@ from django.http import JsonResponse
 
 from koinrex.users.models import User
 from moneybag.wrappers.litecoin import LTCKey
-from moneybag.wrappers.coinbin import convert, convert_usd
+from moneybag.wrappers.coinbin import convert, convert_usd, get_btc_value
 from moneybag.wrappers.blockcypher import address_current_transactions as act
 from moneybag.wrappers.blockcypher import address_current_balance as acb
 from moneybag.wrappers.blockcypher import address_received as a_rec
@@ -43,7 +43,9 @@ class AddressABC(models.Model):
             user_object = coin_addr.objects.get(user=user_id)
             total.update({str(user_object.pub_key): {'user_email': str(user_object.user.email),
                                                      'user_coin': str(user_object.currency_name),
-                                                     'user_balance': user_object.balance}})
+                                                     'user_balance': user_object.balance,
+                                                     'currency_ticker': user_object.currency_ticker,
+                                                     'coin_btc_value': get_btc_value(user_object.balance,user_object.currency_ticker)}})
         return JsonResponse(total)
 
     # Returns JSON of coin name with its corresponding unique address
@@ -56,9 +58,10 @@ class AddressABC(models.Model):
             moneybag.update({str(user_object.currency_name): str(user_object.pub_key)})
         return JsonResponse(moneybag)
 
+
     # TODO 1 = make return value precision to 8 decimal places
     @classmethod
-    def get_btc_value(cls, user_id):
+    def get_total_btc_value(cls, user_id):
         btc_val = 0
         for coin_addr in cls.__subclasses__():
             user_object = coin_addr.objects.get(user=user_id)
