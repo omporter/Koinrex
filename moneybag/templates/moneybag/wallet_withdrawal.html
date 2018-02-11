@@ -3,11 +3,34 @@
 {% block title %}Wallet - Withdrawals {%endblock title%}
 {% block content %}
 <h1>Withdrawals</h1>
+
+{% if coin_ticker == 'LTC' %}
+	<style type="text/css">
+	.coins{
+		color: green;
+	}
+	</style>
+{% else %}
+	<style type="text/css">
+	.coins{
+		color: orange;
+	}
+	</style>
+{%endif%}
+
+
+
+<div class="content coins">
+	<h2>{{coin_name}} - {{coin_ticker}}</h2><br>
+	Total Balance - <strong>{{balance}}</strong><br>
+	In Order - <strong>....</strong><br>
+	Available Balance - <strong>.....</strong><br>
+</div>
 <div class="content">
 <h3>Withdrawal Address</h3>
-<input type="text" name="withdrawal_address">
+<input type="text" name="withdrawal_address" required>
 <h3>Amount</h3>
-<input type="text" name="withdrawal_amount">
+<input type="text" name="withdrawal_amount" required>
 
 Txn fee : 0.002 &nbsp;You will get:
 <br>
