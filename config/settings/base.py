@@ -51,6 +51,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'raven.contrib.django.raven_compat',  # raven logging
+    'django_rq',
+    'scheduler'
 ]
 
 # Apps specific for this project go here.
@@ -330,3 +332,33 @@ RAVEN_CONFIG = {
 GOOGLE_RECAPTCHA_SITE_KEY = "6LdJ9kAUAAAAAH6e0YD6EhYNVP1pfBc0UAYgqj1u"
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdJ9kAUAAAAAPhvh0irz2YDBlqPvWl9R7yYg_bL'
 NOCAPTCHA = True
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        #'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
+        'DEFAULT_TIMEOUT': 500,
+    },
+
+}
+
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+

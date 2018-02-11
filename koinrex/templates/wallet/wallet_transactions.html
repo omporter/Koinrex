@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}
+
+<table class="table" id="deposit">
+<tr>
+<td>Status</td>
+<td>Coin</td>
+<td>Amount</td>
+<td>Date</td>
+<td>Information</td>
+</tr>
+{% for deposit from deposits: %}
+<tr>
+	<td>{{ deposit.status }}</td> 
+	<td>{{ deposit.coin }}</td> 
+	<td>{{ deposit.amount }}</td> 
+	<td>{{ deposit.date }}</td> 
+	<td><a href="{{}}">View on BlockCypher</a></td> 
+</tr>
+{% endfor %}
+</table>
+
+<table class="table" id="withdrawal">
+<tr>
+<td>Status</td>
+<td>Coin</td>
+<td>Amount</td>
+<td>Date</td>
+<td>Information</td>
+</tr>
+{% for withdrawal from withdrawals: %}
+<tr>
+	<td>{{ withdrawal.status }}</td> 
+	<td>{{ withdrawal.coin }}</td> 
+	<td>{{ withdrawal.amount }}</td> 
+	<td>{{ withdrawal.date }}</td> 
+	<td><a href="{{}}">View on BlockCypher</a></td> 
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}

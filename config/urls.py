@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls import include, url
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
@@ -20,6 +21,12 @@ urlpatterns = [
 
     # Include the allauth and 2FA urls from their respective packages.
     url(r'^', include('allauth_2fa.urls')),
+
+    url(r'^django-rq/', include('django_rq.urls')),
+
+    #re_path(r'^wallet/',include('moneybag.urls')),
+
+    re_path(r'^transactions/',include('transactions.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

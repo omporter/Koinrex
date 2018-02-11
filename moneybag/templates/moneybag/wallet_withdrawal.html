@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}
+
+<h1>Withdrawals</h1>
+<select name="coin_name">
+{% for coin in coins %}
+<option value={{}}>{{}}</option> 
+{% endfor %}
+</select>
+<h2>Withdrawal Address</h2>
+<input type="text" name="withdrawal_address">
+<h2>Amount</h2>
+<input type="text" name="withdrawal_amount">
+
+Txn fee : 0.002 nbsp;You will get: 
+<input type="button" value="Submit Withdrawal">
+
+
+<h2>Withdrawal History</h2>
+<a href="">Need help</a>
+<table class="table">
+<tr>
+<td>Date</td>
+<td>IP Address</td>
+<td>Amount</td>
+<td>Link</td>
+</tr>
+{% for ip_address in ip_addresses: %}
+<tr>
+<td>{{ip_address.date}}</td>
+<td>{{ip_address.address}}</td>
+<td>{{ip_address.amount}}</td>
+<td><a href="">See on BlockCypher</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %} 
+
+
