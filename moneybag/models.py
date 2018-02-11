@@ -166,13 +166,16 @@ class CurrencyABC(models.Model):
 
     @classmethod
     def get_list_of_coins(cls):
-        coin_list = list()
         coin_dict = dict()
+        coin_name_list = list()
+        coin_ticker_list = list()
         for coins in cls.__subclasses__():
-            #coin_list.append(coins.objects.get().currency_name)
-            coin_list.append(coins.objects.values_list('currency_name', flat=True))
-        payload = {'coin_list': coin_list}
-        coin_dict.update(coin_list)
+            # FIXME = Hardcoded first element to query only the first instance of that Currency class       
+            coin_name_list.append(coins.objects.get(id=1).currency_name)
+            coin_ticker_list.append(coins.objects.get(id=1).currency_ticker)
+        payload = {'coin_list': coin_name_list, 
+                   'coin_ticker': coin_ticker_list}
+        coin_dict.update(payload)
         return JsonResponse(coin_dict)
 
     class Meta:
