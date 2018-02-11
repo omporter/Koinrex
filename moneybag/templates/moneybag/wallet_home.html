@@ -1,33 +1,68 @@
-{% extends "base.html" %} 
-{% load static %} 
+```{% extends "base.html" %}
+{% load static %}
 {% block title %}Wallet - Balance{% endblock %}
-
 {% block content %}
+    <br>
+    </br>
+    <div><h1>Balances</h1>
+    </div>
+    <br>
+    <!-- <h3>Table of coins</h3> -->
+    <div>
+        <div class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
+            <div class="card-header">Approx. BTC Value</div>
+            <div class="card-body">
+                <h4 class="card-title">₿ 1234.00000000</h4>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
+            <div class="card-header">Approx. USD Value</div>
+            <div class="card-body">
+                <h4 class="card-title">$ 1,000,000.00</h4>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
+            <div class="card-header">Withdrawal Limit</div>
+            <div class="card-body">
+                <h4 class="card-title">₿ 0.0 / 2.0</h4>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" id="coin_search">
+        <div class="input-group-append">
+            <button class="btn btn-dark" type="button">Search</button>
+        </div>
+    </div><br></br>
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Coin</th>
+                    <th>Name</th>
+                    <th>Total Balance</th>
+                    <th>BTC Value</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key,item in coins.items %}
+                    <tr>
+                        <th scope="row">{{item.currency_ticker}}</th>
+                        <td>{{item.user_coin}}</td>
+                        <td>{{item.user_balance}}</td>
+                        <td>{{item.coin_btc_value}}</td>
+                        <td><button class="btn btn-dark btn-sm" type="button">Deposit</button></td>
+                        <td><button class="btn btn-dark btn-sm" type="button">Withdraw</button></td>
+                        <td><button class="btn btn-dark btn-sm" type="button">Trade</button></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+            </table>
+    </div>
+    {% endblock content %}
 
-<h1>Balances</h1>
-<h3>Table of coins</h3>
-<div class="ui-widget" style="padding-bottom: 120px;">
-<input type="text" placeholder="search" id="coin_search">
-</div>
-<table class="table" style="padding-top: 120px;">
-<tr>
-<td>Coin</td>
-<td>Name</td>
-<td>Total Balance</td>
-<td>BTC Value</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-{% for key,item in coins.items %}
-<tr>
-<td>{{item.currency_ticker}}</td>
-<td>{{item.user_coin}}</td>
-<td>{{item.user_balance}}</td>
-<td>{{item.coin_btc_value}}</td>
-<tr>
-{%endfor%}
-</table>
-
-
-{% endblock content %}
+```
