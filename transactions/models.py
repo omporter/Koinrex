@@ -28,7 +28,7 @@ class TransactionsABC(models.Model):
     # TODO Not there in deposit, but there in withdrawals
     fee = models.DecimalField(max_digits=64, decimal_places=16)
     confirmations = models.IntegerField()
-    wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
+    #wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
     received_at = models.DateTimeField()
 
     # TODO Status is not needed
@@ -53,9 +53,10 @@ class TransactionsABC(models.Model):
         abstract = True
 
 
-class Deposits(TransactionABC):  # TODO
-    from_address
+# class Deposits(TransactionABC):  # TODO
+#     from_address
+    
 
-
-class Withdrawals(TransactionABC):  # TODO
-    to_address
+# class Withdrawals(TransactionABC):  # TODO
+#     to_address
+#     

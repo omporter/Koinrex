@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import TransactionsABC
@@ -17,12 +17,12 @@ def process_withdrawal(request):
 	# list of all subclasses
 	address_subc = AddressABC.__subclasses__()
 
-
-    for i in range(len(address_subc)):
+	for i in range(len(address_subc)):
 		if(address_subc[i] == AddressABC.__subclasses__()[i]):
 			#address lite = current coin class
-			if(request.POST['something'] == address_subc[i])
-				return coin_address = address_subc[i]
+			if(request.POST['something'] == address_subc[i]):
+				coin_address = address_subc[i]
+				return coin_address
 			else:
 				continue
 		else:
@@ -44,4 +44,12 @@ def process_withdrawal(request):
 
 	amount = 10
 
-	t_wrapper.send_transaction(current_user_id, key_address, amount, key_address, key_symbol )
+	withdraw_hash = t_wrapper.send_transaction(current_user_id, key_address, amount, key_address, key_symbol )
+
+	return withdraw_hash
+
+
+def home(request):
+
+	#return render_to_response("transactions/home.html")
+	return render(request, 'home.html' , {})
