@@ -23,5 +23,17 @@ def home(request):
 def withdrawals(request):
     current_user = request.user
     current_user_id = current_user.id
-    context = {}
+
+    get_coin_details = AddressABC.get_all_balance(current_user_id).content.decode()
+    result = ast.literal_eval(get_coin_details)
+    # print("------------------------", result)
+    coin = request.GET['coin']
+    for key,val in result.items():
+        if (val['user_coin'] == coin):
+            ticker = val['currency_ticker']
+            balance = val['user_balance']
+    context = {'coin_name' : coin,
+               'coin_ticker' : ticker,
+               'balance' : balance,
+        }
     return render(request, 'moneybag/wallet_withdrawal.html', context)
