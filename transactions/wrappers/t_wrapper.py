@@ -72,21 +72,37 @@ def dash_address_current_transactions(dash_public_key):
 
 ''' send a transaction from the private key '''
 
-def send_transaction(uid, private_key, amount, withdrawal_address, ticker):
+# def send_transaction(uid, private_key, amount, withdrawal_address, ticker):
+#     if amount == None:
+#         amount = 0
+#     api_key = '8763ec6f2f164f508feff8205b1e6b33' # TODO use a koinrex API 
+#     amount_in_sats = (float(amount) * 100000000)
+#     ticker = str(ticker.lower())
+#     # mining_fee = (amount * 0.005) # take 0.5% for now for the sake of argument until we work out how to calculate mining fee
+#     transaction_hash = simple_spend(from_privkey=str(private_key), to_address=str(withdrawal_address), to_satoshis=amount_in_sats, change_address=None, privkey_is_compressed=False, min_confirmations=0, api_key=api_key, coin_symbol=ticker)
+#     return transaction_hash
+
+
+# simple_spend(from_privkey='97838249d77bfa65f97be02b63fd1b7bb6a58474c7c22784a0da63993d1c2f90', to_address='C1rGdt7QEPGiwPMFhNKNhHmyoWpa5X92pn', to_satoshis=100, coin_symbol='ltc')
+
+
+def send_transaction( private_key, amount, withdrawal_address, ticker):
+
     if amount == None:
+
         amount = 0
+
     api_key = '8763ec6f2f164f508feff8205b1e6b33' # TODO use a koinrex API 
-    amount_in_sats = (float(amount) * 100000000)
+
     ticker = str(ticker.lower())
+
     # mining_fee = (amount * 0.005) # take 0.5% for now for the sake of argument until we work out how to calculate mining fee
-    transaction_hash = simple_spend(from_privkey=str(private_key), to_address=str(withdrawal_address), to_satoshis=amount_in_sats, change_address=None, privkey_is_compressed=False, min_confirmations=0, api_key=api_key, coin_symbol=ticker)
+
+    transaction_hash = simple_spend(from_privkey=private_key, to_address=withdrawal_address, to_satoshis=amount, change_address=None, privkey_is_compressed=False, min_confirmations=0, api_key=api_key, coin_symbol=ticker)
+
     return transaction_hash
 
-
-# simple_spend(from_privkey='97838249d77bfa65f97be02b63fd1b7bb6a58474c7c22784a0da63993d1c2f90', to_address='C1rGdt7QEPGiwPMFhNKNhHmyoWpa5X92pn', to_satoshis=1000000, coin_symbol='bcy')
-
-
-
+#print(send_transaction(1, '1de5e4cdb0391d3a95dbb892b9c317202c0a263d8621daba0cf682ca5d11ed36', 10000, 'LVuEP2jgj1YyFnneZFmJFyyB1Tj28yj41t', 'ltc')
 
 
 

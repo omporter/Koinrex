@@ -19,18 +19,29 @@
 <td></td>
 <td></td>
 </tr>
-
-{% for coin in coins%}
+<!-- {% for key,item in coins.items %}
 <tr>
-    <td>{{coin.coin_ticker}}</td>
-    <td>{{coin.coin_name}}</td>
-    <td>{{coin.total_balance}}</td>
-    <td>{{coin.btc_value}}</td>
+<td>{{item.currency_ticker}}</td>
+<td name ="test">{{item.user_coin}}</td>
+<td>{{item.user_balance}}</td>
+<td>{{item.coin_btc_value}}</td>
+<td>
+<form method="post" action="{% url 'home' %}">
+{% csrf_token %} -->
+<button name="withdraw" value="{{item.user_coin}}"  type="submit">withdraw</button>
+</form>
+</td>
 </tr>
+
+
+
+
 {%endfor%}
 </table>
 
-{{coins}}
-
 
 {% endblock content %}
+
+
+
+

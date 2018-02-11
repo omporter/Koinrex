@@ -53,7 +53,7 @@ class Withdrawals(TransactionsABC):
     to_address = models.CharField(
         max_length=64, unique=True, editable=False)
     amount = models.DecimalField(max_digits=64, decimal_places=16)
-    fee = models.DecimalField(max_digits=64, decimal_places=16)
+    #fee = models.DecimalField(max_digits=64, decimal_places=16)
 
     class Meta:
         verbose_name = 'Withdrawal'
