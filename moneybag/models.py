@@ -169,9 +169,10 @@ class CurrencyABC(models.Model):
         coin_list = list()
         coin_dict = dict()
         for coins in cls.__subclasses__():
-            coin_list.append(coins.objects.get().currency_name)
+            #coin_list.append(coins.objects.get().currency_name)
+            coin_list.append(coins.objects.values_list('currency_name', flat=True))
         payload = {'coin_list': coin_list}
-        coin_dict.update(payload)
+        coin_dict.update(coin_list)
         return JsonResponse(coin_dict)
 
     class Meta:
