@@ -69,8 +69,9 @@ LOCAL_APPS = [
 
     'allauth_2fa',
 
-    # Enable Moneybag (Wallet) app
+    # Enable Koinrex app
     'moneybag',
+    'transactions',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
