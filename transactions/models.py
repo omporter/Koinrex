@@ -1,35 +1,22 @@
+import uuid
+
 from django.db import models
+
+from moneybag.models import AddressABC
+from koinrex.users.models import User
 
 # Create your models here.
 
-# TODO 3 = Maybe make a transactions app to handle wallet transactions?
-
 
 class TransactionsABC(models.Model):
-    TRANSACTION_TYPES = (
-        ('S', 'Send'),
-        ('R', 'Receive'),
-    )
-
-    STATUSES = (
-        ('PEN', 'Pending'),
-        ('PRO', 'Processing'),
-        ('COM', 'Completed'),
-    )
-
     created_at = models.DateTimeField(auto_now_add=True)
-    transaction_type = models.CharField(
-        max_length=1, choices=TRANSACTION_TYPES)
-    transaction_id = models.CharField(max_length=64)
-
-    # TODO Not there in deposit, but there in withdrawals
-    amount = models.DecimalField(max_digits=64, decimal_places=16)
-
-    # TODO Not there in deposit, but there in withdrawals
-    fee = models.DecimalField(max_digits=64, decimal_places=16)
+    koinrex_tx_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     confirmations = models.IntegerField()
-    #wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
-    received_at = models.DateTimeField()
+    user_address = models.CharField(
+        max_length=64)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    tx_hash = models.CharField(max_length=128)
 
     # TODO Status is not needed
     # status = models.CharField(max_length=3, choices=STATUSES)
@@ -53,10 +40,21 @@ class TransactionsABC(models.Model):
         abstract = True
 
 
-# class Deposits(TransactionABC):  # TODO
-#     from_address
-    
+class Deposits(TransactionsABC):
+    from_address = models.CharField(
+        max_length=64, unique=True, editable=False)
 
-# class Withdrawals(TransactionABC):  # TODO
-#     to_address
-#     
+    class Meta:
+        verbose_name = 'Deposit'
+        verbose_name_plural = 'Deposits'
+
+
+class Withdrawals(TransactionsABC):
+    to_address = models.CharField(
+        max_length=64, unique=True, editable=False)
+    amount = models.DecimalField(max_digits=64, decimal_places=16)
+    fee = models.DecimalField(max_digits=64, decimal_places=16)
+
+    class Meta:
+        verbose_name = 'Withdrawal'
+        verbose_name_plural = 'Withdrawals'
