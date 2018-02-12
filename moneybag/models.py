@@ -64,6 +64,7 @@ class AddressABC(models.Model):
                             : str(user_object.pub_key)})
         return JsonResponse(moneybag)
 
+
     # TODO 1 = make return value precision to 8 decimal places
 
     @classmethod
@@ -193,13 +194,15 @@ class CurrencyABC(models.Model):
     # Returns all the coins in the Koinrex universe
     @classmethod
     def get_list_of_coins(cls):
-        coin_list = list()
         coin_dict = dict()
+        coin_name_list = list()
+        coin_ticker_list = list()
         for coins in cls.__subclasses__():
-            # FIXME = Hardcoded first element to query only the first instance
-            # of that Currency class
-            coin_list.append(coins.objects.get(id=1).currency_name)
-        payload = {'coin_list': coin_list}
+            # FIXME = Hardcoded first element to query only the first instance of that Currency class       
+            coin_name_list.append(coins.objects.get(id=1).currency_name)
+            coin_ticker_list.append(coins.objects.get(id=1).currency_ticker)
+        payload = {'coin_list': coin_name_list, 
+                   'coin_ticker': coin_ticker_list}
         coin_dict.update(payload)
         return JsonResponse(coin_dict)
 
