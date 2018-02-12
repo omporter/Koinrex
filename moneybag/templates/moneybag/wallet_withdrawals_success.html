@@ -4,23 +4,9 @@
 	{% block content %}
 		<br>
 		</br>
-		<div><h1>Withdrawals</h1>
+		<div><h1>Withdrawals Success</h1>
 		</div>
 		<br>
-		<div class="card">
-			<h3 class="card-header">{{coin_name}} - {{coin_ticker}}</h3>
-			<div class="card-body">
-				<h4 class="card-title">Total Balance - <strong>₿ {{balance}}</strong></h4><br>
-				<h4>Available Balance - <strong>.....</strong></h4><br>
-				<h4>In Order - <strong>....</strong></h4><br>
-				<form id="WithdrawalForms" method="post" action="#">
-					{% csrf_token %}
-						{{form.as_p}}  
-						<button name="withdraw" value = {{coin_ticker}}  type="submit">withdraw</button>
-				</form>
-				
-			</div>
-		</div><br>
 		<div class="card">
 			<h3 class="card-header">Withdrawal History</h3>
 			<div class="card-body">
