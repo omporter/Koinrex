@@ -4,7 +4,7 @@ from django.db import models
 
 from moneybag.models import AddressABC
 from koinrex.users.models import User
-
+from django.forms import ModelForm
 # Create your models here.
 
 
@@ -12,7 +12,7 @@ class TransactionsABC(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     koinrex_tx_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
-    confirmations = models.IntegerField()
+    confirmations = models.IntegerField(blank=True , null=True)
     user_address = models.CharField(
         max_length=64)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -51,7 +51,7 @@ class Deposits(TransactionsABC):
 
 class Withdrawals(TransactionsABC):
     to_address = models.CharField(
-        max_length=64, unique=True, editable=False)
+        max_length=64, unique=True, editable=True)
     amount = models.DecimalField(max_digits=64, decimal_places=16)
     #fee = models.DecimalField(max_digits=64, decimal_places=16)
 

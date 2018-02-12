@@ -9,6 +9,8 @@
 <div class="ui-widget" style="padding-bottom: 120px;">
 <input type="text" placeholder="search" id="coin_search">
 </div>
+
+
 <table class="table" style="padding-top: 120px;">
 <tr>
 <td>Coin</td>
@@ -19,26 +21,23 @@
 <td></td>
 <td></td>
 </tr>
-<!-- {% for key,item in coins.items %}
+<tr>
+</tr>
+{% for key,item in coins.items %}
 <tr>
 <td>{{item.currency_ticker}}</td>
 <td name ="test">{{item.user_coin}}</td>
 <td>{{item.user_balance}}</td>
 <td>{{item.coin_btc_value}}</td>
 <td>
-<form method="post" action="{% url 'home' %}">
-{% csrf_token %} -->
-<button name="withdraw" value="{{item.user_coin}}"  type="submit">withdraw</button>
+<form id="WithdrawalForms" method="post" action="{% url 'home' %}">
+{% csrf_token %}
+ {{form.as_p}}       
+ <button name="withdraw" value = {{item.currency_ticker}}  type="submit">withdraw</button>
 </form>
-</td>
 </tr>
-
-
-
-
 {%endfor%}
 </table>
-
 
 {% endblock content %}
 

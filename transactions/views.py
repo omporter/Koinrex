@@ -10,73 +10,54 @@ import json
 from itertools import zip_longest
 import ast
 import time
+from django.views.decorators.csrf import csrf_exempt 
 # send_transaction(uid, private_key, amount, withdrawal_address, ticker):
+from .forms import WithdrawalForms
 
-# @login_required
-# def process_withdrawal(request):
 
-# 	# This gets the current logged in user
-# 	current_user = request.user
-# 	current_user_id = current_user.id
+'''
+To note request.POST['withdraw'] comes from submit button which is currency ticker from html 
+and currency ticker should always be there for this to work
 
-# 	# list of all subclasses
-# 	address_subc = AddressABC.__subclasses__()
+changes made to models and froms 
 
-# 	# iterate through the list of all subclasses that exist
-# 	for i in range(len(address_subc)):
-# 		# if the request['something'] == bitcoin then it goes into the if statement
-# 		if(request.POST['something'] == address_subc[i].objects.get(current_user_id).currency_name):
-# 			# then assigns the current subclass to coin_address which will be used to get keys and stuff
-# 			coin_address = address_subc[i]
-
-# 			# get the objects for the coin
-# 			key_address_obj = coin_address.objects.get(current_user_id)
-
-# 			# get the sec_key for that coin
-# 			key_address = key_address_obj.sec_key
-
-# 			# get the coin ticker 
-# 			key_symbol = key_address_obj.currency_ticker
-
-# 			# needs a functional website to test
-# 			# if request.method == 'POST':
-# 			# 	if(request.POST['something'] == 'deposit'):
-# 			# 		amount = request.post['deposit']
-
-# 	amount = 10
-
-# 	withdraw_hash = t_wrapper.send_transaction(current_user_id, key_address, amount, key_address, key_symbol )
-
-# 	return withdraw_hash
-
+'''
+# for withdraw
 @login_required
 def home(request):
-	# current_user = request.user
-	# current_user_id = current_user.id
-
-	# results = AddressABC.get_all_balance(current_user_id).content.decode()
-	# result = ast.literal_eval(results)
-
-	# context = {'coins': result}
-
-	# print(result)
-
-	# if request.method == 'POST':
-	# 	print(request.POST)
-	# 	a = request.POST['withdraw']
-	# 	print(a)
-	# 	# list of all subclasses
-
-	amount = 1000
-	withdraw_hash = t_wrapper.send_transaction( '1de5e4cdb0391d3a95dbb892b9c317202c0a263d8621daba0cf682ca5d11ed36' , amount,  'LVuEP2jgj1YyFnneZFmJFyyB1Tj28yj41t' , 'ltc')
-		# hash_store = TransactionsABC(confirmations=1,user_address=key_address, user = current_user, tx_hash = withdraw_hash)
-		# hash_store.save()
-	print("withdraw hash ",withdraw_hash)
-	# return withdraw_hash
-	#return HttpResponseRedirect('')
-	# return render(request, 'transactions/home.html' , context)
-# 
 
 
-# from blockcypher import simple_spend
-# simple_spend(from_privkey='1de5e4cdb0391d3a95dbb892b9c317202c0a263d8621daba0cf682ca5d11ed36', to_address='LVuEP2jgj1YyFnneZFmJFyyB1Tj28yj41t', to_satoshis=10000, coin_symbol='ltc')
+	current_user = request.user
+	current_user_id = current_user.id
+
+	results = AddressABC.get_all_balance(current_user_id).content.decode()
+	result = ast.literal_eval(results)
+	form = WithdrawalForms()
+	obj = AddressABC.__subclasses__()
+	context = {'coins': result,'form' : form}
+
+	if request.method == 'POST':
+		form = WithdrawalForms(request.POST)
+		#print(request.POST)
+		coint_tick = request.POST['withdraw']
+		#print(a)
+		if form.is_valid():
+			withdraw_confirm = WithdrawalForms(request.POST)
+			to_withdraw_address = withdraw_confirm['to_address'].value()
+			withdraw_amount = int(withdraw_confirm['amount'].value())
+
+			for i in range(len(obj)):
+				if(obj[i] == coin_tick):
+					secret = obj[i].objects.get(id=current_user.id).sec_key
+					#withdraw_hash = t_wrapper.send_transaction( secret , withdraw_amount,  to_withdraw_address , coin_tick)
+					withdraw_hash = 'adebc98565129883f58cac7ee2740a8ff64a02d1fe83120a1f0c63fb2bfe8e65'
+			
+					TransactionsABC = form.save(commit = False)
+					TransactionsABC.user_address = to_withdraw_address
+					TransactionsABC.user = current_user
+					TransactionsABC.tx_hash = withdraw_hash
+					#TransactionsABC.confirmations = 1
+					TransactionsABC.save()
+				
+	return render(request, 'transactions/home.html' , context)
+
