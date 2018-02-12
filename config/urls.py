@@ -26,6 +26,8 @@ urlpatterns = [
 
     url(r'^django-rq/', include('django_rq.urls')),
 
+    re_path(r'^transactions/',include('transactions.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

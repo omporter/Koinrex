@@ -67,4 +67,3 @@ def deposits(request):
 
 
     return render(request, 'moneybag/wallet_deposit.html', context)
-

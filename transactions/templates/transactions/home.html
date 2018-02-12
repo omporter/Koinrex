@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %}Wallet - Balance{% endblock %}
+
+{% block content %}
+
+<h1>Balances</h1>
+<h3>Table of coins</h3>
+<div class="ui-widget" style="padding-bottom: 120px;">
+<input type="text" placeholder="search" id="coin_search">
+</div>
+
+
+<table class="table" style="padding-top: 120px;">
+<tr>
+<td>Coin</td>
+<td>Name</td>
+<td>Total Balance</td>
+<td>BTC Value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+</tr>
+{% for key,item in coins.items %}
+<tr>
+<td>{{item.currency_ticker}}</td>
+<td name ="test">{{item.user_coin}}</td>
+<td>{{item.user_balance}}</td>
+<td>{{item.coin_btc_value}}</td>
+<td>
+<form id="WithdrawalForms" method="post" action="{% url 'home' %}">
+{% csrf_token %}
+ {{form.as_p}}       
+ <button name="withdraw" value = {{item.currency_ticker}}  type="submit">withdraw</button>
+</form>
+</tr>
+{%endfor%}
+</table>
+
+{% endblock content %}
+
+
+
+
