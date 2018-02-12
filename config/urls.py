@@ -21,6 +21,8 @@ urlpatterns = [
     # Include the allauth and 2FA urls from their respective packages.
     url(r'^', include('allauth_2fa.urls')),
 
+    url(r'^django-rq/', include('django_rq.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

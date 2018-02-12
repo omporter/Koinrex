@@ -68,3 +68,11 @@ coincurve==7.1.0
 # Blockchain wrapper
 blockcypher==1.0.73
 
+
+# Django RQ (Background workers)
+
+django-rq==1.0.1
+django-rq-scheduler==1.1.1
+django-test-plus==1.0.22
+rq==0.10.0
+rq-scheduler==0.8.1

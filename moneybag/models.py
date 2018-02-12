@@ -15,6 +15,8 @@ from bit import Key
 
 import decimal
 
+from django_rq import job
+
 # TODO 1 = Change precision in decimal return value in get_btc_value()
 # TODO 2 = Make code more DRY in fetch from blockchain methods
 # TODO 3 = Move transactions to its own app
@@ -89,6 +91,7 @@ class AddressABC(models.Model):
     # Fetches all current transactions from blockchain for all addresses of a
     # given user and returns a dictionary of updated items
     @classmethod
+    @job('default')
     def fetch_tx_count(cls, user_id):
         updated = dict()
         for coin_addr in cls.__subclasses__():
@@ -105,6 +108,7 @@ class AddressABC(models.Model):
     # Fetches all current balances from blockchain for all addresses of a
     # given user and returns a dictionary of updated items
     @classmethod
+    @job('default')
     def fetch_balance(cls, user_id):
         updated = dict()
         for coin_addr in cls.__subclasses__():
@@ -121,6 +125,7 @@ class AddressABC(models.Model):
     # Fetches all amount received's from blockchain for all addresses of a
     # given user and returns a dictionary of updated items
     @classmethod
+    @job('default')
     def fetch_amt_received(cls, user_id):
         updated = dict()
         for coin_addr in cls.__subclasses__():
@@ -137,6 +142,7 @@ class AddressABC(models.Model):
     # Fetches all amount sent's from blockchain for all addresses of a
     # given user and returns a dictionary of updated items
     @classmethod
+    @job('default')
     def fetch_amt_sent(cls, user_id):
         updated = dict()
         for coin_addr in cls.__subclasses__():
