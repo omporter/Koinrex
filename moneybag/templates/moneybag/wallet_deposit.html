@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Wallet - Deposits {%endblock title%}
+	{% block content %}
+		<br>
+		</br>
+		<div><h1>Deposits</h1>
+		</div>
+		<br>
+		<div class="card">
+			<h3 class="card-header">{{coin_name}} - {{coin_ticker}}</h3>
+			<div class="card-body">
+				<h4 class="card-title">Total Balance - <strong>₿ {{balance}}</strong></h4><br>
+				<h4>Available Balance - <strong>.....</strong></h4><br>
+				<h4>In Order - <strong>....</strong></h4><br>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<strong>Important</strong>
+			<ul>
+				<li>Send only BTC to this deposit address. Sending any other currency to this address may result in the loss of your deposit</li>
+			</ul>
+				BTC Address:<br>
+				<strong>{{address}}</strong>
+			</div>
+		</div>
+		<br>
+		<div class="card">
+			<h3 class="card-header">Deposit History</h3>
+			<div class="card-body">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th>#</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Jacob</td>
+							<td>Thornton</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div><br>
+	{% endblock content %}

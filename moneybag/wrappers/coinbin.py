@@ -1,5 +1,6 @@
 import requests
 import json
+import decimal
 
 from IPython import embed
 
@@ -32,5 +33,10 @@ def convert_usd(coin, amount):
         return obj['coin']['usd']
     except:
         return ('Network issue, try again')
+
+def get_btc_value(balance,ticker):
+    rate = convert(ticker, 'BTC')
+    btc_val = balance * decimal.Decimal(rate)
+    return btc_val
 
 # print(type(convert('btc', 'ltc')))
