@@ -56,3 +56,23 @@ raven==6.5.0
 # Recaptcha packages
 django-nocaptcha-recaptcha
 django-recaptcha
+
+# Moneybag (Wallet)
+ecdsa==0.13
+base58==0.2.5
+
+# Bit library
+bit==0.4.2
+coincurve==7.1.0
+
+# Blockchain wrapper
+blockcypher==1.0.73
+
+
+# Django RQ (Background workers)
+
+django-rq==1.0.1
+django-rq-scheduler==1.1.1
+django-test-plus==1.0.22
+rq==0.10.0
+rq-scheduler==0.8.1

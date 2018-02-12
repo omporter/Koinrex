@@ -1,9 +1,11 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
@@ -15,11 +17,14 @@ urlpatterns = [
     # User management
     url(r'^users/', include('koinrex.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    re_path(r'^wallet/',include('moneybag.urls')),
 
     # Your stuff: custom urls includes go here
 
     # Include the allauth and 2FA urls from their respective packages.
     url(r'^', include('allauth_2fa.urls')),
+
+    url(r'^django-rq/', include('django_rq.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
