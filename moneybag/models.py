@@ -9,8 +9,6 @@ from moneybag.wrappers.blockcypher import address_received as a_rec
 from moneybag.wrappers.blockcypher import address_sent as a_sent
 
 
-
-
 from bit import Key
 
 # Import for converting float to decimal in AddressABC

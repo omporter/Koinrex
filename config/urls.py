@@ -24,8 +24,6 @@ urlpatterns = [
 
     url(r'^django-rq/', include('django_rq.urls')),
 
-    #re_path(r'^wallet/',include('moneybag.urls')),
-
     re_path(r'^transactions/',include('transactions.urls')),
 
 
