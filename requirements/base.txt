@@ -69,7 +69,7 @@ coincurve==7.1.0
 blockcypher==1.0.73
 
 
-# task queues - redis
+# Django RQ (Background workers)
 
 django-rq==1.0.1
 django-rq-scheduler==1.1.1
