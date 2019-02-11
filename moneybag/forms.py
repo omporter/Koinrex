@@ -1,6 +1,9 @@
 from django import forms
 from django.forms import ModelForm
 from transactions.models import Withdrawals, Deposits
+
+
+
 class WithdrawalForms(forms.ModelForm):
 
 	class Meta:
